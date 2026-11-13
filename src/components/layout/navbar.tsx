@@ -24,6 +24,7 @@ export function Navbar() {
 
   const navItems = [
     { href: '/', label: dictionary.nav.home },
+    { href: '/about', label: dictionary.nav.about },
     { href: '/experience', label: dictionary.nav.experience },
     { href: '/education', label: dictionary.nav.education },
     { href: '/projects', label: dictionary.nav.projects },
@@ -48,7 +49,7 @@ export function Navbar() {
         </Link>
 
         <nav
-          className="hidden items-center gap-1 rounded-full border border-border/60 bg-card/55 p-1 shadow-sm md:flex"
+          className="hidden items-center gap-1 rounded-full border border-border/60 bg-card/55 p-1 shadow-sm xl:flex"
           aria-label="Main Navigation"
         >
           {navItems.map((item) => (
@@ -57,7 +58,7 @@ export function Navbar() {
               href={item.href}
               data-active={pathname === item.href}
               className={cn(
-                'nav-gradient-link group relative rounded-full px-3 py-2 text-sm transition-all duration-200 hover:bg-accent/70',
+                'nav-gradient-link group relative whitespace-nowrap rounded-full px-3 py-2 text-sm transition-all duration-200 hover:bg-accent/70',
                 pathname === item.href
                   ? 'bg-secondary text-secondary-foreground shadow-sm after:absolute after:bottom-1 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-[#3B82F6] after:shadow-[0_0_10px_rgba(59,130,246,0.65)]'
                   : 'text-muted-foreground'
@@ -78,7 +79,7 @@ export function Navbar() {
               <Button
                 size="icon"
                 variant="outline"
-                className="rounded-full border-border/70 bg-card/70 shadow-sm md:hidden"
+                className="rounded-full border-border/70 bg-card/70 shadow-sm xl:hidden"
                 aria-label={dictionary.nav.openMenu}
               >
                 <Menu className="h-4 w-4" />

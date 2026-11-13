@@ -50,7 +50,8 @@ const COPY: Record<Locale, Record<SeoPage, { title: string; description: string 
     },
     about: {
       title: 'O mnie',
-      description: 'Kim jestem i jak pracuję.'
+      description:
+        'Karol Kozłowski: inżynier DevOps i Platform. Moja droga od Linuksa i bezpieczeństwa w Samsungu do CI/CD w Visa, zasady pracy i stack technologiczny.'
     }
   },
   en: {
@@ -85,7 +86,8 @@ const COPY: Record<Locale, Record<SeoPage, { title: string; description: string 
     },
     about: {
       title: 'About',
-      description: 'Who I am and how I work.'
+      description:
+        'Karol Kozłowski, DevOps and Platform Engineer: my path from Linux and security at Samsung to CI/CD at Visa, how I work, and my tech stack.'
     }
   }
 };
@@ -93,7 +95,7 @@ const COPY: Record<Locale, Record<SeoPage, { title: string; description: string 
 const OG_IMAGE = { url: '/opengraph-image', width: 1200, height: 630, alt: 'Karol Kozłowski: DevOps & Platform Engineer' };
 
 // Pages whose content is not ready for search engines yet.
-const NOINDEX: SeoPage[] = ['about'];
+const NOINDEX: SeoPage[] = [];
 
 export function buildMetadata(page: SeoPage, locale: Locale): Metadata {
   const { title, description } = COPY[locale][page];

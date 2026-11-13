@@ -57,15 +57,69 @@ const dictionaries = {
       restart: 'Restart'
     },
     about: {
-      title: 'O Mnie',
-      description: 'Jak pracuję, co cenię i z jakich technologii korzystam na co dzień.',
-      bioTitle: 'Bio',
-      bioText:
-        'Nazywam się {author}, pracuję jako {role} i mieszkam w {location}. Skupiam się na klarownym myśleniu produktowym, utrzymywalnym kodzie i pragmatycznych decyzjach inżynierskich.',
-      valuesTitle: 'Wartości',
-      stackTitle: 'Stack Technologiczny',
-      values: ['Myślenie produktowe', 'Mocna architektura frontendu', 'Dostępne doświadczenia'],
-      stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Node.js', 'Testy']
+      title: 'O mnie',
+      description: 'Kim jestem, jak pracuję i z jakimi technologiami pracuję na co dzień.',
+      bioTitle: 'Kim jestem',
+      bio: [
+        'Jestem inżynierem DevOps i Platform z Warszawy z około trzyletnim doświadczeniem w Samsung Electronics i Visa. Zaczynałem blisko sprzętu: od jądra Linuksa i embedded na platformach ARM, przez debugowanie hypervisora, po bezpieczeństwo obrazów Linux i Android.',
+        'W Visa przeniosłem to doświadczenie na poziom platformy: budowałem pipeline’y CI/CD, wbudowywałem skanowanie bezpieczeństwa w proces dostarczania i tworzyłem powtarzalne, skonteneryzowane środowiska dla zespołów deweloperskich. Dziś najbardziej interesuje mnie inżynieria platformowa: narzędzia, które pozwalają innym zespołom dostarczać szybciej i bezpieczniej.'
+      ],
+      principlesTitle: 'Jak pracuję',
+      principles: [
+        {
+          title: 'Automatyzuję to, co powtarzalne',
+          text: 'Od provisioningu płytek deweloperskich w Ansible po lokalne środowiska uruchamiane jedną komendą: jeśli coś robi się drugi raz, staje się skryptem.'
+        },
+        {
+          title: 'Bezpieczeństwo w pipeline’ie, nie na końcu',
+          text: 'Skanowanie jakości kodu, zależności i podatności (SonarQube, Checkmarx, Nexus) jest częścią każdego builda, a nie osobnym etapem przed wydaniem.'
+        },
+        {
+          title: 'Wszystko w Gicie',
+          text: 'Konfiguracja, wersjonowanie i wdrożenia są opisane w repozytorium. Mój homelab zmienia się wyłącznie przez commity, a Argo CD pilnuje reszty.'
+        },
+        {
+          title: 'Powtarzalne środowiska',
+          text: 'Deweloper powinien móc odtworzyć środowisko zbliżone do produkcji na własnej maszynie, bez instrukcji na kilka stron.'
+        },
+        {
+          title: 'Rozumiem system pod spodem',
+          text: 'Doświadczenie z jądrem Linuksa, hypervisorami i siecią pomaga mi szybko znaleźć prawdziwą przyczynę problemu, a nie tylko objaw.'
+        }
+      ],
+      stackTitle: 'Stack technologiczny',
+      stack: [
+        { area: 'CI/CD', items: ['GitHub Actions', 'Jenkins', 'Maven', 'JFrog Artifactory', 'wersjonowanie semantyczne'] },
+        { area: 'DevSecOps', items: ['SonarQube', 'Checkmarx', 'Sonatype Nexus', 'Black Duck'] },
+        { area: 'Kontenery i chmura', items: ['Docker', 'Docker Compose', 'Docker Swarm', 'Kubernetes', 'AWS (EKS, IAM, VPC)'] },
+        { area: 'IaC i GitOps', items: ['Terraform', 'Ansible', 'Argo CD', 'Helm', 'Kustomize'] },
+        { area: 'Linux i systemy', items: ['Ubuntu', 'Debian', 'RHEL', 'jądro Linuksa', 'Yocto', 'ARM', 'secure boot / TEE'] },
+        { area: 'Obserwowalność', items: ['Prometheus', 'Grafana', 'Loki', 'Alloy'] },
+        { area: 'Dane', items: ['Hadoop (HDFS)', 'Hive', 'Apache Spark', 'DB2'] },
+        { area: 'Języki', items: ['Python', 'Bash', 'C'] },
+        { area: 'Inżynieria z AI', items: ['Claude Code', 'serwery MCP', 'GitHub Copilot', 'Ollama'] }
+      ],
+      beyondTitle: 'Poza pracą',
+      beyond: [
+        {
+          title: 'Homelab',
+          text: '3-węzłowy klaster Kubernetes zarządzany w modelu GitOps, z podglądem na żywo.',
+          href: '/projects',
+          cta: 'Zobacz projekt'
+        },
+        {
+          title: 'Podcast „Rozmowy z Kozłem”',
+          text: 'Rozmowy o karierze, technologii, przedsiębiorczości i zdrowiu z ciekawymi gośćmi.',
+          href: '/podcast',
+          cta: 'Posłuchaj'
+        },
+        {
+          title: 'Porozmawiajmy',
+          text: 'Chętnie porozmawiam o DevOps, inżynierii platformowej i nowych projektach.',
+          href: '/contact',
+          cta: 'Kontakt'
+        }
+      ]
     },
     education: {
       title: 'Edukacja',
@@ -214,15 +268,69 @@ const dictionaries = {
       restart: 'Restart'
     },
     about: {
-      title: 'About',
-      description: 'How I work, what I value, and the technologies I use daily.',
-      bioTitle: 'Bio',
-      bioText:
-        'I am {author}, a {role} based in {location}. I focus on clear product thinking, maintainable code, and practical engineering decisions.',
-      valuesTitle: 'Values',
-      stackTitle: 'Tech Stack',
-      values: ['Product mindset', 'Strong frontend architecture', 'Accessible experiences'],
-      stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Node.js', 'Testing']
+      title: 'About me',
+      description: 'Who I am, how I work, and the technologies I work with every day.',
+      bioTitle: 'Who I am',
+      bio: [
+        'I am a DevOps and Platform Engineer based in Warsaw, with about three years of experience at Samsung Electronics and Visa. I started close to the hardware: the Linux kernel and embedded systems on ARM platforms, then hypervisor debugging, then security for Linux and Android images.',
+        'At Visa I took that foundation to the platform level: building CI/CD pipelines, embedding security scanning into delivery, and creating reproducible, containerised environments for development teams. Today I am most interested in platform engineering: building the tools that let other teams ship faster and more safely.'
+      ],
+      principlesTitle: 'How I work',
+      principles: [
+        {
+          title: 'Automate the repeatable',
+          text: 'From provisioning development boards with Ansible to one-command local environments: if something is done twice, it becomes a script.'
+        },
+        {
+          title: 'Security in the pipeline, not at the end',
+          text: 'Code-quality, dependency and vulnerability scanning (SonarQube, Checkmarx, Nexus) runs in every build instead of as a separate pre-release step.'
+        },
+        {
+          title: 'Everything in Git',
+          text: 'Configuration, versioning and deployments live in the repository. My homelab only changes through commits, and Argo CD takes care of the rest.'
+        },
+        {
+          title: 'Reproducible environments',
+          text: 'A developer should be able to recreate a production-like environment on their own machine without a multi-page setup guide.'
+        },
+        {
+          title: 'Understand the system underneath',
+          text: 'Experience with the Linux kernel, hypervisors and networking helps me find the real root cause of a problem, not just the symptom.'
+        }
+      ],
+      stackTitle: 'Tech stack',
+      stack: [
+        { area: 'CI/CD', items: ['GitHub Actions', 'Jenkins', 'Maven', 'JFrog Artifactory', 'semantic versioning'] },
+        { area: 'DevSecOps', items: ['SonarQube', 'Checkmarx', 'Sonatype Nexus', 'Black Duck'] },
+        { area: 'Containers & cloud', items: ['Docker', 'Docker Compose', 'Docker Swarm', 'Kubernetes', 'AWS (EKS, IAM, VPC)'] },
+        { area: 'IaC & GitOps', items: ['Terraform', 'Ansible', 'Argo CD', 'Helm', 'Kustomize'] },
+        { area: 'Linux & systems', items: ['Ubuntu', 'Debian', 'RHEL', 'Linux kernel', 'Yocto', 'ARM', 'secure boot / TEE'] },
+        { area: 'Observability', items: ['Prometheus', 'Grafana', 'Loki', 'Alloy'] },
+        { area: 'Data platforms', items: ['Hadoop (HDFS)', 'Hive', 'Apache Spark', 'DB2'] },
+        { area: 'Languages', items: ['Python', 'Bash', 'C'] },
+        { area: 'AI-assisted engineering', items: ['Claude Code', 'MCP servers', 'GitHub Copilot', 'Ollama'] }
+      ],
+      beyondTitle: 'Beyond work',
+      beyond: [
+        {
+          title: 'Homelab',
+          text: 'A 3-node Kubernetes cluster managed with GitOps, with a live view of its state.',
+          href: '/projects',
+          cta: 'See the project'
+        },
+        {
+          title: 'Rozmowy z Kozłem podcast',
+          text: 'Conversations about careers, technology, entrepreneurship and health with interesting guests.',
+          href: '/podcast',
+          cta: 'Listen'
+        },
+        {
+          title: 'Let’s talk',
+          text: 'Always happy to talk about DevOps, platform engineering and new projects.',
+          href: '/contact',
+          cta: 'Contact'
+        }
+      ]
     },
     education: {
       title: 'Education',
