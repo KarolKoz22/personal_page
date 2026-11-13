@@ -43,7 +43,7 @@ const dictionaries = {
       openSection: 'Otwórz sekcję',
       highlights: {
         education: 'Zaplecze akademickie, projekty i praca inżynierska.',
-        career: 'Aktualna pozycja oraz pozycje w przeszłości.',
+        career: 'Doświadczenie w Visa i Samsung: DevOps, bezpieczeństwo i Linux.',
         projects: 'Homelab na Kubernetesie z GitOps i podglądem Argo CD na żywo.',
         podcast: 'Odcinki, wizja podcastu oraz shortsy.'
       }
@@ -75,7 +75,7 @@ const dictionaries = {
     },
     experience: {
       title: 'Oś Kariery',
-      description: 'Poprzednie i obecne role, rezultaty oraz kluczowe technologie.',
+      description: 'Role zawodowe, rezultaty oraz kluczowe technologie.',
       remote: 'Zdalnie',
       photoTitle: 'Zdjęcie Profilowe',
       photoDescription:
@@ -183,7 +183,7 @@ const dictionaries = {
       openSection: 'Open section',
       highlights: {
         education: 'Academic background, projects, and engineering thesis.',
-        career: 'Current position and previous roles.',
+        career: 'Experience at Visa and Samsung: DevOps, security, and Linux.',
         projects: 'Kubernetes homelab run with GitOps, with a live Argo CD view.',
         podcast: 'Episodes, podcast vision, and shorts.'
       }
@@ -215,7 +215,7 @@ const dictionaries = {
     },
     experience: {
       title: 'Career Timeline',
-      description: 'Past and present roles, outcomes, and key technologies.',
+      description: 'Professional roles, outcomes, and key technologies.',
       remote: 'Remote',
       photoTitle: 'Profile Photo',
       photoDescription:

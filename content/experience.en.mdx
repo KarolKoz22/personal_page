@@ -1,41 +1,55 @@
 ---
 timeline:
-  - title: Mid DevOps Engineer
-    company: Visa
-    period: July 2025 - Present
+  - title: DevOps Engineer
+    company: Visa Inc.
+    period: July 2025 - October 2026
     location: Warsaw
-    summary: Building and evolving CI/CD pipelines in Jenkins and GitHub Actions (including migration work), dockerizing applications, and deploying them on Kubernetes. Developing operational automation in Bash and Python.
+    summary: Platform and DevOps work for engineering teams. I built CI/CD automation, DevSecOps quality gates, and containerised developer environments, covering the path from commit to published artifact.
+    highlights:
+      - Built and maintained GitHub Actions CI pipelines covering environment setup, unit tests, code coverage, static analysis, security scanning, container image builds, and publishing to JFrog Artifactory.
+      - Integrated SonarQube, Checkmarx, and Sonatype Nexus into the delivery workflow to enforce code quality and dependency/vulnerability scanning.
+      - Created a reusable semantic-versioning workflow for JAR artifacts that derives major/minor/patch versions from Git tags, branch conventions, and pull-request metadata.
+      - Containerised monorepositories and delivered one-click local deployments with Docker Swarm, so developers can reproduce smaller-scale QA and production-like environments.
+      - Built a one-command local data-engineering stack (Hadoop, Hive, Spark) with Docker Compose, using DB2 as a source to test Spark-job logic against migrated data.
+      - Wrote automation against an internal deployment platform's REST API to trigger environment and pod updates, and contributed to the migration towards AWS EKS.
+      - Supported repository governance and Git best practices, including branching conventions and pull-request workflows.
     tags:
-      - Jenkins
       - GitHub Actions
-      - Docker
-      - Kubernetes
-      - Bash
+      - SonarQube
+      - Checkmarx
+      - Sonatype Nexus
+      - JFrog Artifactory
+      - Docker Swarm
+      - Docker Compose
+      - Spark
+      - AWS EKS
       - Python
-  - title: Junior Linux Developer
+      - Bash
+  - title: Linux Developer Intern → Junior Hypervisor Engineer → Junior Security Engineer
     company: Samsung Electronics
-    period: December 2023 - June 2025
+    period: September 2023 - June 2025
     location: Warsaw
-    summary: Worked in the Security Team on Flash Memory Protector (FMP). Built automation tools for Android builds and remote board workflows (Ansible), contributed to security projects (e.g., watermarking), and attended a security workshop in Seoul.
-    tags:
-      - Linux
-      - Security
-      - Android Build
-      - Ansible
-      - FMP
-  - title: Linux Developer Intern
-    company: Samsung Electronics
-    period: September 2023 - November 2023
-    location: Warsaw
-    summary: Studied Linux kernel internals (loadable modules) and ARM architecture (TrustZone, TEE). Customized and cross-compiled an open-source Xbox One wheel driver for ARM using Yocto and C/Python.
+    summary: Systems engineering close to the hardware. I worked on embedded Linux and ARM platforms, then hypervisor debugging, and then platform security for Linux and Android images.
+    highlights:
+      - "Security: contributed to a project adding watermarking to Linux and Android images through LDFW (the loadable firmware component carrying the security stack), and supported secure binary integration and signing workflows."
+      - "Security: worked on Samsung's Flash Memory Protector (FMP) security IP, including architecture workshops at Samsung headquarters in Seoul."
+      - "Hypervisor: debugged customer issues in ARM hypervisor (EL2) behaviour, frequently tracing root causes to device-tree configuration."
+      - Automated provisioning of Raspberry Pi devices with Ansible, so remote engineers could recover crashed development boards themselves instead of relying on someone in the office.
+      - "Internship: adapted an Xbox One controller driver to support a racing wheel on an ARM board, using Yocto Project recipes, cross-compilation, C, and on-board debugging."
+      - Worked hands-on with Linux internals (kernel modules, character/block devices, virtual memory, processes and threads), ARM TrustZone/TEE, and secure boot. Troubleshot systems and networks with journalctl, dmesg, tcpdump, dig, and ethtool.
     tags:
       - Linux Kernel
+      - Embedded Linux
       - ARM
+      - Hypervisor (EL2)
+      - TrustZone / TEE
+      - Secure Boot
       - Yocto
+      - Ansible
       - C
       - Python
 ---
 
 # Experience Overview
 
-My experience sits at the intersection of Linux/embedded systems, security engineering, and modern DevOps delivery. I focus on scalable deployments, automation, and production reliability.
+My experience sits at the intersection of Linux and embedded systems, security engineering, and modern DevOps delivery. I focus on automation, secure delivery pipelines, and reliable environments.

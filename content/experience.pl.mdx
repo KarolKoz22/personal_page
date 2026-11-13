@@ -1,41 +1,55 @@
 ---
 timeline:
-  - title: Mid DevOps Engineer
-    company: Visa
-    period: lipiec 2025 - obecnie
+  - title: DevOps Engineer
+    company: Visa Inc.
+    period: lipiec 2025 - październik 2026
     location: Warszawa
-    summary: Tworzę i rozwijam pipeline'y CI/CD w Jenkins i GitHub Actions (w tym migracje), konteneryzuję aplikacje i wdrażam je na Kubernetes. Rozwijam automatyzację operacyjną w Bash i Python.
+    summary: Praca platformowa i DevOps dla zespołów inżynierskich. Budowałem automatyzację CI/CD, bramki jakości DevSecOps i skonteneryzowane środowiska deweloperskie, obejmujące całą drogę od commita do opublikowanego artefaktu.
+    highlights:
+      - Budowa i utrzymanie pipeline'ów CI w GitHub Actions obejmujących przygotowanie środowiska, testy jednostkowe, pokrycie kodu, analizę statyczną, skanowanie bezpieczeństwa, budowanie obrazów kontenerów i publikację do JFrog Artifactory.
+      - Integracja SonarQube, Checkmarx i Sonatype Nexus z procesem dostarczania w celu kontroli jakości kodu oraz skanowania zależności i podatności.
+      - Stworzenie reużywalnego workflow wersjonowania semantycznego artefaktów JAR, wyznaczającego wersje major/minor/patch na podstawie tagów Git, konwencji nazewnictwa gałęzi i metadanych pull requestów.
+      - Konteneryzacja monorepozytoriów i wdrożenia lokalne „jednym kliknięciem” z Docker Swarm, pozwalające deweloperom odtwarzać mniejsze środowiska zbliżone do QA i produkcji.
+      - Lokalny stos data-engineeringowy (Hadoop, Hive, Spark) uruchamiany jedną komendą przez Docker Compose, z DB2 jako źródłem danych do testowania logiki jobów Spark na zmigrowanych danych.
+      - Automatyzacja oparta na REST API wewnętrznej platformy wdrożeniowej (aktualizacje środowisk i podów) oraz udział w migracji do AWS EKS.
+      - Wsparcie w zarządzaniu repozytoriami i dobrych praktykach Git, w tym konwencjach gałęzi i procesie pull requestów.
     tags:
-      - Jenkins
       - GitHub Actions
-      - Docker
-      - Kubernetes
-      - Bash
+      - SonarQube
+      - Checkmarx
+      - Sonatype Nexus
+      - JFrog Artifactory
+      - Docker Swarm
+      - Docker Compose
+      - Spark
+      - AWS EKS
       - Python
-  - title: Junior Linux Developer
+      - Bash
+  - title: Linux Developer Intern → Junior Hypervisor Engineer → Junior Security Engineer
     company: Samsung Electronics
-    period: grudzień 2023 - czerwiec 2025
+    period: wrzesień 2023 - czerwiec 2025
     location: Warszawa
-    summary: Praca w zespole Security, m.in. wokół Flash Memory Protector (FMP). Tworzenie narzędzi automatyzujących buildy Androida i pracę zdalną na boardach (Ansible), udział w projektach security (np. watermarking) oraz warsztatach bezpieczeństwa w Seulu.
-    tags:
-      - Linux
-      - Security
-      - Android Build
-      - Ansible
-      - FMP
-  - title: Linux Developer Intern
-    company: Samsung Electronics
-    period: wrzesień 2023 - listopad 2023
-    location: Warszawa
-    summary: Poznałem Linux kernel (loadable modules) oraz architekturę ARM (TrustZone, TEE). Dostosowałem i cross-kompilowałem open-source'owy sterownik kierownicy Xbox One dla ARM z wykorzystaniem Yocto oraz C/Python.
+    summary: Inżynieria systemowa blisko sprzętu. Pracowałem kolejno nad embedded Linuxem i platformami ARM, debugowaniem hypervisora oraz bezpieczeństwem platformy dla obrazów Linux i Android.
+    highlights:
+      - "Security: udział w projekcie dodającym watermarking do obrazów Linux i Android poprzez LDFW (ładowalny komponent firmware zawierający stos bezpieczeństwa) oraz wsparcie procesów integracji i podpisywania bezpiecznych binariów."
+      - "Security: praca nad IP bezpieczeństwa Samsung Flash Memory Protector (FMP), w tym udział w warsztatach architektonicznych w centrali Samsunga w Seulu."
+      - "Hypervisor: debugowanie zgłoszeń klientów dotyczących zachowania hypervisora ARM (EL2), których przyczyną często okazywała się konfiguracja device tree."
+      - Automatyzacja provisioningu urządzeń Raspberry Pi z Ansible, dzięki której zdalni inżynierowie mogli sami przywracać zawieszone płytki deweloperskie, bez angażowania osoby w biurze.
+      - "Staż: adaptacja sterownika kontrolera Xbox One do obsługi kierownicy wyścigowej na płytce ARM z użyciem receptur Yocto Project, cross-kompilacji, C i debugowania na urządzeniu."
+      - Praktyczna praca z wnętrzem Linuksa (moduły jądra, urządzenia znakowe i blokowe, pamięć wirtualna, procesy i wątki), ARM TrustZone/TEE i secure boot. Diagnostyka systemów i sieci z użyciem journalctl, dmesg, tcpdump, dig i ethtool.
     tags:
       - Linux Kernel
+      - Embedded Linux
       - ARM
+      - Hypervisor (EL2)
+      - TrustZone / TEE
+      - Secure Boot
       - Yocto
+      - Ansible
       - C
       - Python
 ---
 
 # Przegląd Doświadczenia
 
-Buduję kompetencje na styku Linux/embedded, bezpieczeństwa i nowoczesnego DevOps. W praktyce skupiam się na skalowalnych wdrożeniach, automatyzacji i niezawodności środowisk produkcyjnych.
+Moje doświadczenie łączy Linux i systemy embedded, inżynierię bezpieczeństwa oraz nowoczesny DevOps. Skupiam się na automatyzacji, bezpiecznych procesach dostarczania oprogramowania i niezawodnych środowiskach.

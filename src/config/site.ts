@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: 'My Personal Website',
-  title: 'Karol Kozłowski | Mid DevOps Engineer',
+  title: 'Karol Kozłowski | DevOps Engineer',
   description:
-    'Mid DevOps Engineer portfolio covering Linux, security, CI/CD, Kubernetes, automation, career timeline, education, and podcast content.',
+    'Platform / DevOps Engineer portfolio covering CI/CD, DevSecOps, Kubernetes, Linux, automation, projects, career timeline, education, and podcast content.',
   seoKeywords: [
     'Karol Kozłowski',
     'DevOps Engineer',
-    'Mid DevOps Engineer',
+    'Platform Engineer',
     'Platform Engineering',
     'Kubernetes',
     'Linux',
@@ -24,7 +24,7 @@ export const siteConfig = {
   ],
   url: 'https://karolkozlowski.pl',
   author: 'Karol Kozłowski',
-  role: 'DevOps Engineer @ Visa',
+  role: 'DevOps Engineer',
   location: 'Poland',
   youtubeChannelId: process.env.YOUTUBE_CHANNEL_ID ?? '',
   social: {

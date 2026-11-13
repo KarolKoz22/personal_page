@@ -8,6 +8,7 @@ export type TimelineItem = {
   period: string;
   location?: string;
   summary: string;
+  highlights?: string[];
   tags?: string[];
 };
 
@@ -45,6 +46,16 @@ export function Timeline({
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-sm leading-relaxed text-muted-foreground">{item.summary}</p>
+                  {item.highlights?.length ? (
+                    <ul className="space-y-2 text-sm leading-relaxed text-muted-foreground">
+                      {item.highlights.map((highlight) => (
+                        <li key={highlight} className="flex gap-2.5">
+                          <span className="mt-[0.55rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary/70" aria-hidden="true" />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                   {item.tags?.length ? (
                     <div className="flex flex-wrap gap-2">
                       {item.tags.map((tag, tagIndex) => (
