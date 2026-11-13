@@ -2,7 +2,6 @@
 
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronUp, ExternalLink, Linkedin, Instagram, X, Youtube } from 'lucide-react';
@@ -12,11 +11,12 @@ import { SocialIcon } from '@/components/ui/brand-icons';
 import { siteConfig } from '@/config/site';
 
 const POPUP_DELAY_MS = 10_000;
-const socialPreview = {
-  youtube: '/social/youtube.jpeg',
-  linkedin: '/social/linkedin.jpeg',
-  instagram: '/social/instagram.jpeg',
-  tiktok: '/social/tiktok.jpeg'
+// Each card is filled with the platform's own brand colour and a large logo.
+const brandTile = {
+  youtube: 'linear-gradient(135deg, #ff0033 0%, #c4001f 100%)',
+  linkedin: 'linear-gradient(135deg, #0a66c2 0%, #004182 100%)',
+  instagram: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%)',
+  tiktok: 'linear-gradient(135deg, #010101 0%, #1c1c1c 100%)'
 } as const;
 
 export function SocialPromoPopup() {
@@ -49,47 +49,48 @@ export function SocialPromoPopup() {
   const cards: {
     key: string;
     href: string;
-    preview: string;
+    tile: string;
     title: string;
-    badge: string;
     accent: string;
-    icon: ReactNode;
+    logo: ReactNode;
   }[] = [
     {
       key: 'youtube',
       href: siteConfig.social.youtube,
-      preview: socialPreview.youtube,
+      tile: brandTile.youtube,
       title: youtubeLabel,
-      badge: 'YouTube',
-      accent: '#ff3d3d',
-      icon: <Youtube className="h-3.5 w-3.5 text-[#ff3d3d]" />
+      accent: '#ff0033',
+      logo: <Youtube className="h-full w-auto text-white" strokeWidth={1.6} />
     },
     {
       key: 'linkedin',
       href: siteConfig.social.linkedin,
-      preview: socialPreview.linkedin,
+      tile: brandTile.linkedin,
       title: linkedinLabel,
-      badge: 'LinkedIn',
-      accent: '#1a66ff',
-      icon: <Linkedin className="h-3.5 w-3.5 text-[#1a66ff]" />
+      accent: '#0a66c2',
+      logo: <Linkedin className="h-full w-auto text-white" strokeWidth={1.6} />
     },
     {
       key: 'instagram',
       href: siteConfig.social.instagram,
-      preview: socialPreview.instagram,
+      tile: brandTile.instagram,
       title: instagramLabel,
-      badge: 'Instagram',
-      accent: '#d62976',
-      icon: <Instagram className="h-3.5 w-3.5 text-[#d62976]" />
+      accent: '#d6249f',
+      logo: <Instagram className="h-full w-auto text-white" strokeWidth={1.6} />
     },
     {
       key: 'tiktok',
       href: siteConfig.social.tiktok,
-      preview: socialPreview.tiktok,
+      tile: brandTile.tiktok,
       title: tiktokLabel,
-      badge: 'TikTok',
       accent: '#25f4ee',
-      icon: <SocialIcon name="tiktok" className="h-3.5 w-3.5 text-[#25f4ee]" />
+      logo: (
+        <span className="relative inline-flex h-full aspect-square">
+          <SocialIcon name="tiktok" className="absolute inset-0 h-full w-full translate-x-[3%] translate-y-[3%] text-[#fe2c55]" />
+          <SocialIcon name="tiktok" className="absolute inset-0 h-full w-full -translate-x-[3%] -translate-y-[3%] text-[#25f4ee]" />
+          <SocialIcon name="tiktok" className="relative h-full w-full text-white" />
+        </span>
+      )
     }
   ];
 
@@ -134,13 +135,12 @@ export function SocialPromoPopup() {
                   className={cardClass}
                   style={{ borderColor: `color-mix(in oklab, hsl(var(--border)) 72%, ${card.accent} 28%)` }}
                 >
-                  <div className="relative h-24 bg-gradient-to-br from-background/95 via-card/90 to-muted/70">
-                    <Image src={card.preview} alt="" fill aria-hidden="true" className="object-contain p-1 opacity-85" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-transparent" />
-                    <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/45 px-2 py-1 text-[11px] text-white">
-                      {card.icon}
-                      {card.badge}
-                    </div>
+                  <div
+                    className="flex h-28 items-center justify-center p-5 transition-transform duration-300 [&_svg]:drop-shadow-[0_6px_14px_rgba(0,0,0,0.25)] group-hover:[&>*]:scale-105"
+                    style={{ background: card.tile }}
+                    aria-hidden="true"
+                  >
+                    <span className="flex h-full items-center justify-center transition-transform duration-300">{card.logo}</span>
                   </div>
                   <div className="flex items-center justify-between px-3 py-2.5">
                     <span className="text-sm font-medium">{card.title}</span>
@@ -241,8 +241,8 @@ export function SocialPromoPopup() {
                     className={cardClass}
                     style={{ borderColor: `color-mix(in oklab, hsl(var(--border)) 72%, ${card.accent} 28%)` }}
                   >
-                    <div className="relative h-16 bg-gradient-to-br from-background/95 via-card/90 to-muted/70">
-                      <Image src={card.preview} alt="" fill aria-hidden="true" className="object-contain p-1 opacity-85" />
+                    <div className="flex h-16 items-center justify-center p-3" style={{ background: card.tile }} aria-hidden="true">
+                      <span className="flex h-full items-center justify-center">{card.logo}</span>
                     </div>
                     <div className="flex items-center justify-between px-2 py-1.5">
                       <span className="text-[11px] font-medium">{card.title}</span>

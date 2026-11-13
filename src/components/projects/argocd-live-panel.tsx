@@ -1,37 +1,15 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GitCommitHorizontal, RefreshCw } from 'lucide-react';
 
 import { useLanguage } from '@/components/language-provider';
+import { ArgoCdResourceGraph, HealthIcon, SyncIcon } from '@/components/projects/argocd-resource-graph';
 import type { ArgoStatus } from '@/lib/argocd';
 import { cn } from '@/lib/utils';
 
 const POLL_MS = 30_000;
-
-const syncTone: Record<string, string> = {
-  Synced: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
-  OutOfSync: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30',
-  Declared: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
-};
-
-const healthTone: Record<string, string> = {
-  Healthy: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
-  Progressing: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30',
-  Degraded: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30',
-  Missing: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30',
-  Suspended: 'bg-zinc-500/15 text-zinc-600 dark:text-zinc-400 border-zinc-500/30'
-};
-
-const neutralTone = 'bg-muted/60 text-muted-foreground border-border/70';
-
-function Pill({ value, tones }: { value: string; tones: Record<string, string> }) {
-  return (
-    <span className={cn('inline-flex rounded-full border px-2 py-0.5 text-xs font-medium', tones[value] ?? neutralTone)}>
-      {value}
-    </span>
-  );
-}
+const PREFERRED_DEFAULT_APP = 'loki';
 
 export function ArgoCdLivePanel({ initial }: { initial: ArgoStatus | null }) {
   const { dictionary, locale } = useLanguage();
@@ -39,6 +17,8 @@ export function ArgoCdLivePanel({ initial }: { initial: ArgoStatus | null }) {
   const [status, setStatus] = useState<ArgoStatus | null>(initial);
   const [loading, setLoading] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [selectedApp, setSelectedApp] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -47,6 +27,7 @@ export function ArgoCdLivePanel({ initial }: { initial: ArgoStatus | null }) {
       if (!res.ok) throw new Error(String(res.status));
       setStatus((await res.json()) as ArgoStatus);
       setFailed(false);
+      setRefreshKey((key) => key + 1);
     } catch {
       setFailed(true);
     } finally {
@@ -63,6 +44,15 @@ export function ArgoCdLivePanel({ initial }: { initial: ArgoStatus | null }) {
   }, [initial, refresh]);
 
   const isLive = status?.mode === 'live';
+  const apps = useMemo(() => status?.apps ?? [], [status]);
+
+  // Default to a small, readable app; keep the user's choice across refreshes.
+  useEffect(() => {
+    if (!apps.length) return;
+    if (selectedApp && apps.some((app) => app.name === selectedApp)) return;
+    setSelectedApp(apps.find((app) => app.name === PREFERRED_DEFAULT_APP)?.name ?? apps[0].name);
+  }, [apps, selectedApp]);
+
   const timeFormat = new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', { timeStyle: 'medium' });
   const dateFormat = new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', { dateStyle: 'medium' });
 
@@ -75,7 +65,9 @@ export function ArgoCdLivePanel({ initial }: { initial: ArgoStatus | null }) {
             <span
               className={cn(
                 'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium',
-                isLive ? syncTone.Synced : neutralTone
+                isLive
+                  ? 'border-emerald-500/30 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                  : 'border-border/70 bg-muted/60 text-muted-foreground'
               )}
             >
               <span className={cn('h-1.5 w-1.5 rounded-full', isLive ? 'animate-pulse bg-emerald-500' : 'bg-muted-foreground')} />
@@ -105,38 +97,47 @@ export function ArgoCdLivePanel({ initial }: { initial: ArgoStatus | null }) {
       {failed && !status && <p className="text-sm text-rose-500">{t.error}</p>}
       {!status && !failed && <p className="text-sm text-muted-foreground">{t.loading}</p>}
 
-      {status && status.apps.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] text-left text-sm">
-            <thead className="text-xs uppercase tracking-wide text-muted-foreground">
-              <tr className="border-b border-border/60">
-                <th className="py-2 pr-3 font-medium">{t.app}</th>
-                <th className="py-2 pr-3 font-medium">{t.source}</th>
-                <th className="py-2 pr-3 font-medium">{t.sync}</th>
-                <th className="py-2 font-medium">{t.health}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {status.apps.map((app) => (
-                <tr key={app.name} className="border-b border-border/40 last:border-0">
-                  <td className="py-2.5 pr-3">
-                    <div className="font-medium">{app.name}</div>
-                    {app.namespace && <div className="text-xs text-muted-foreground">ns/{app.namespace}</div>}
-                  </td>
-                  <td className="py-2.5 pr-3 font-mono text-xs text-muted-foreground">
-                    {app.source}
-                    {app.revision && <span className="ml-1.5 opacity-70">@{app.revision}</span>}
-                  </td>
-                  <td className="py-2.5 pr-3">
-                    <Pill value={app.sync} tones={syncTone} />
-                  </td>
-                  <td className="py-2.5">
-                    <Pill value={app.health} tones={healthTone} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {apps.length > 0 && (
+        <div className="flex flex-wrap gap-2" role="tablist" aria-label={t.app}>
+          {apps.map((app) => {
+            const active = isLive && app.name === selectedApp;
+            return (
+              <button
+                key={app.name}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                disabled={!isLive}
+                onClick={() => setSelectedApp(app.name)}
+                title={[app.source, app.namespace && `ns/${app.namespace}`, app.revision && `@${app.revision}`].filter(Boolean).join(' · ')}
+                className={cn(
+                  'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors',
+                  active
+                    ? 'border-primary bg-primary/10 text-foreground'
+                    : 'border-border/70 bg-background/75 text-muted-foreground enabled:hover:border-primary/40 enabled:hover:text-foreground',
+                  !isLive && 'cursor-default'
+                )}
+              >
+                <HealthIcon status={isLive ? app.health : undefined} className="h-3.5 w-3.5" />
+                <SyncIcon status={isLive ? app.sync : undefined} className="h-3.5 w-3.5" />
+                {app.name}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {status && (
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h4 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t.graph}</h4>
+            {isLive && <p className="text-xs text-muted-foreground">{t.graphHint}</p>}
+          </div>
+          {isLive && selectedApp ? (
+            <ArgoCdResourceGraph app={selectedApp} refreshKey={refreshKey} />
+          ) : (
+            <p className="rounded-xl border border-dashed border-border/70 p-4 text-sm text-muted-foreground">{t.graphOffline}</p>
+          )}
         </div>
       )}
 

@@ -34,6 +34,36 @@ const CACHE_MS = 15_000;
 
 let cache: { at: number; value: ArgoStatus } | null = null;
 
+/** Per app: "Kind/namespace/name" -> sync status, from the last live app list. */
+let syncByApp = new Map<string, Map<string, string>>();
+const treeCache = new Map<string, { at: number; value: ArgoTree }>();
+
+export type ArgoTreeNode = {
+  id: string;
+  kind: string;
+  name: string;
+  namespace?: string;
+  health?: string;
+  healthMessage?: string;
+  sync?: string;
+  /** ids of parent nodes; empty = direct child of the Application */
+  parents: string[];
+  status?: string;
+  node?: string;
+  containers?: string;
+  restarts?: string;
+  images?: string[];
+  createdAt?: string;
+};
+
+export type ArgoTree = {
+  app: string;
+  health: string;
+  sync: string;
+  fetchedAt: string;
+  nodes: ArgoTreeNode[];
+};
+
 /**
  * Minimal GET helper on node:https so a self-signed Argo CD cert can be
  * accepted for this one request (ARGOCD_INSECURE_TLS=true) without turning
@@ -85,9 +115,33 @@ type ArgoApplicationList = {
       sync?: { status?: string; revision?: string; revisions?: string[] };
       health?: { status?: string };
       reconciledAt?: string;
+      resources?: Array<{ kind: string; name: string; namespace?: string; status?: string }>;
     };
   }>;
 };
+
+type ArgoResourceTreeResponse = {
+  nodes?: Array<{
+    kind: string;
+    name: string;
+    namespace?: string;
+    uid: string;
+    parentRefs?: Array<{ uid?: string }>;
+    info?: Array<{ name: string; value: string }>;
+    health?: { status?: string; message?: string };
+    images?: string[];
+    createdAt?: string;
+  }>;
+};
+
+const resourceKey = (kind: string, namespace: string | undefined, name: string) => `${kind}/${namespace ?? ''}/${name}`;
+
+function argoConfig() {
+  const baseUrl = process.env.ARGOCD_URL;
+  const token = process.env.ARGOCD_TOKEN;
+  if (!baseUrl || !token) throw new Error('ARGOCD_URL / ARGOCD_TOKEN not set');
+  return { baseUrl: baseUrl.replace(/\/$/, ''), token, insecure: process.env.ARGOCD_INSECURE_TLS === 'true' };
+}
 
 function describeSource(sources: ArgoSource[]): string {
   // Skip "ref:" sources: they only provide Helm values files.
@@ -98,15 +152,17 @@ function describeSource(sources: ArgoSource[]): string {
 }
 
 async function getLiveApps(): Promise<ArgoApp[]> {
-  const baseUrl = process.env.ARGOCD_URL;
-  const token = process.env.ARGOCD_TOKEN;
-  if (!baseUrl || !token) throw new Error('ARGOCD_URL / ARGOCD_TOKEN not set');
+  const { baseUrl, token, insecure } = argoConfig();
+  const data = await getJson<ArgoApplicationList>(`${baseUrl}/api/v1/applications`, token, insecure);
 
-  const data = await getJson<ArgoApplicationList>(
-    `${baseUrl.replace(/\/$/, '')}/api/v1/applications`,
-    token,
-    process.env.ARGOCD_INSECURE_TLS === 'true'
-  );
+  const nextSync = new Map<string, Map<string, string>>();
+  for (const item of data.items ?? []) {
+    nextSync.set(
+      item.metadata.name,
+      new Map((item.status?.resources ?? []).map((r) => [resourceKey(r.kind, r.namespace, r.name), r.status ?? 'Unknown']))
+    );
+  }
+  syncByApp = nextSync;
 
   return (data.items ?? []).map((item) => {
     const sources = item.spec.sources ?? (item.spec.source ? [item.spec.source] : []);
@@ -203,5 +259,69 @@ export async function getArgoStatus(): Promise<ArgoStatus> {
     commits: await commitsPromise
   };
   cache = { at: Date.now(), value };
+  return value;
+}
+
+const TREE_INFO_FIELDS: Record<string, keyof ArgoTreeNode> = {
+  'Status Reason': 'status',
+  Node: 'node',
+  Containers: 'containers',
+  'Restart Count': 'restarts'
+};
+
+/**
+ * Live resource tree of one Application, reduced to what the graph needs:
+ * kinds, names, health/sync and a few pod facts. No labels, specs or manifests.
+ */
+export async function getResourceTree(app: string): Promise<ArgoTree> {
+  const cached = treeCache.get(app);
+  if (cached && Date.now() - cached.at < CACHE_MS) return cached.value;
+
+  // Only names Argo CD itself reported may be requested.
+  const status = await getArgoStatus();
+  if (status.mode !== 'live') throw new Error('Argo CD is not reachable right now');
+  const meta = status.apps.find((a) => a.name === app);
+  if (!meta) throw new Error('Unknown application');
+
+  const { baseUrl, token, insecure } = argoConfig();
+  const data = await getJson<ArgoResourceTreeResponse>(
+    `${baseUrl}/api/v1/applications/${encodeURIComponent(app)}/resource-tree`,
+    token,
+    insecure
+  );
+
+  const raw = data.nodes ?? [];
+  const known = new Set(raw.map((n) => n.uid));
+  const sync = syncByApp.get(app);
+
+  const nodes: ArgoTreeNode[] = raw.map((n) => {
+    const node: ArgoTreeNode = {
+      id: n.uid,
+      kind: n.kind,
+      name: n.name,
+      namespace: n.namespace,
+      health: n.health?.status,
+      healthMessage: n.health?.message?.slice(0, 200),
+      sync: sync?.get(resourceKey(n.kind, n.namespace, n.name)),
+      // Parents outside the tree (e.g. cluster-scoped owners) => treat as top level.
+      parents: (n.parentRefs ?? []).map((ref) => ref.uid ?? '').filter((uid) => known.has(uid)),
+      images: n.kind === 'Pod' ? n.images : undefined,
+      createdAt: n.createdAt
+    };
+    for (const info of n.info ?? []) {
+      const field = TREE_INFO_FIELDS[info.name];
+      if (field) (node as Record<string, unknown>)[field] = info.value;
+    }
+    return node;
+  });
+
+  const value: ArgoTree = {
+    app,
+    health: meta.health,
+    sync: meta.sync,
+    fetchedAt: new Date().toISOString(),
+    nodes
+  };
+  treeCache.set(app, { at: Date.now(), value });
   return value;
 }

@@ -116,7 +116,24 @@ const dictionaries = {
         refresh: 'Odśwież',
         commits: 'Ostatnie commity GitOps',
         loading: 'Ładowanie…',
-        error: 'Nie udało się pobrać danych.'
+        error: 'Nie udało się pobrać danych.',
+        graph: 'Graf zależności',
+        graphHint: 'Wybierz aplikację. Kliknij zasób, aby zobaczyć szczegóły, a grupę, aby ją rozwinąć.',
+        graphOffline: 'Graf zależności jest dostępny, gdy klaster jest online.',
+        graphError: 'Nie udało się pobrać grafu dla tej aplikacji.',
+        resources: 'zasobów',
+        details: {
+          kind: 'Typ',
+          namespace: 'Namespace',
+          status: 'Status',
+          node: 'Węzeł',
+          containers: 'Kontenery',
+          restarts: 'Restarty',
+          images: 'Obrazy',
+          created: 'Utworzono',
+          message: 'Komunikat',
+          close: 'Zamknij'
+        }
       }
     },
     podcast: {
@@ -256,7 +273,24 @@ const dictionaries = {
         refresh: 'Refresh',
         commits: 'Latest GitOps commits',
         loading: 'Loading…',
-        error: 'Could not load data.'
+        error: 'Could not load data.',
+        graph: 'Dependency graph',
+        graphHint: 'Pick an application. Click a resource for details, or a group to expand it.',
+        graphOffline: 'The dependency graph is available while the cluster is online.',
+        graphError: 'Could not load the graph for this application.',
+        resources: 'resources',
+        details: {
+          kind: 'Kind',
+          namespace: 'Namespace',
+          status: 'Status',
+          node: 'Node',
+          containers: 'Containers',
+          restarts: 'Restarts',
+          images: 'Images',
+          created: 'Created',
+          message: 'Message',
+          close: 'Close'
+        }
       }
     },
     podcast: {
