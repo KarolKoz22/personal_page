@@ -23,8 +23,8 @@ type ContactLink = {
   socialIconName?: string;
 };
 
-export default function ContactPage() {
-  const locale = getServerLocale();
+export default async function ContactPage() {
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
 
   const links: ContactLink[] = [

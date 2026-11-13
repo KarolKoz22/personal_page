@@ -58,7 +58,7 @@ function toEmbedUrl(url: string) {
 }
 
 export default async function PodcastPage() {
-  const locale = getServerLocale();
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
 
   const [{ content, frontmatter }, shortsFallback, liveYoutube] = await Promise.all([

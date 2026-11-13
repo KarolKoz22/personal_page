@@ -31,8 +31,8 @@ const socialToneClass: Record<string, string> = {
   x: 'social-tone-x'
 };
 
-export function Footer() {
-  const locale = getServerLocale();
+export async function Footer() {
+  const locale = await getServerLocale();
   const isPl = locale === 'pl';
   const year = new Date().getFullYear();
 

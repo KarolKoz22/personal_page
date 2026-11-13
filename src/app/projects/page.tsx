@@ -13,8 +13,8 @@ export const metadata = {
   title: 'Projects'
 };
 
-export default function ProjectsPage() {
-  const locale = getServerLocale();
+export default async function ProjectsPage() {
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
   const t = dictionary.projects;
 

@@ -13,7 +13,7 @@ import { getDictionary } from '@/lib/i18n';
 import { getServerLocale } from '@/lib/i18n-server';
 
 export default async function HomePage() {
-  const locale = getServerLocale();
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
   const transcript = await getJsonContent<TranscriptLine[]>(
     locale === 'en' ? 'intro-transcript.en.json' : 'intro-transcript.pl.json'

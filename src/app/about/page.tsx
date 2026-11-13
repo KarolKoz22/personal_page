@@ -9,8 +9,8 @@ export const metadata = {
   title: 'About'
 };
 
-export default function AboutPage() {
-  const locale = getServerLocale();
+export default async function AboutPage() {
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
 
   const bio = dictionary.about.bioText

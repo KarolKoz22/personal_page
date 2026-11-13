@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 export default async function EducationPage() {
-  const locale = getServerLocale();
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
   const { content } = await getMdxContent(localizedMdxFile('education', locale));
 

@@ -18,7 +18,7 @@ type ExperienceFrontmatter = {
 };
 
 export default async function ExperiencePage() {
-  const locale = getServerLocale();
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
 
   const [{ frontmatter }, currentCareer] = await Promise.all([

@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { getDictionary } from '@/lib/i18n';
 import { getServerLocale } from '@/lib/i18n-server';
 
-export default function NotFound() {
-  const locale = getServerLocale();
+export default async function NotFound() {
+  const locale = await getServerLocale();
   const dictionary = getDictionary(locale);
 
   return (
