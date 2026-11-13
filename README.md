@@ -1,4 +1,4 @@
-# Personal Page (Next.js 14 + MDX + Podcast RSS)
+# Personal Page (Next.js 14 + MDX + YouTube)
 
 A modern personal website built with Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui primitives, and framer-motion.
 
@@ -10,7 +10,7 @@ A modern personal website built with Next.js App Router, TypeScript, Tailwind CS
 - framer-motion animations
 - lucide-react icons
 - MDX/Markdown content in `/content`
-- RSS parsing for podcast episodes at build time
+- Podcast episodes and shorts from the YouTube channel (feed or Data API)
 
 ## Quick Start
 
@@ -71,7 +71,6 @@ Run container:
 
 ```bash
 docker run --rm -p 3000:3000 \
-  -e PODCAST_RSS_URL=https://feeds.simplecast.com/54nAGcIl \
   personal-page:local
 ```
 
@@ -86,7 +85,7 @@ All primary content is local and file-based:
 - `content/shorts.json`
 - `content/intro.srt` and `content/intro-transcript.json`
 
-Podcast episodes are auto-synced from RSS using `PODCAST_RSS_URL`.
+Podcast episodes and shorts come from the YouTube channel (`YOUTUBE_CHANNEL_ID`, optional `YOUTUBE_API_KEY`).
 
 ## Site Config
 
@@ -98,7 +97,7 @@ Config includes:
 
 - Site name, author, role, location
 - Social links
-- Podcast RSS feed URL (env override supported)
+- YouTube channel ID (env override supported)
 - Voice intro audio/image source used on homepage narrator card
 - Locale toggle (`PL/EN`) is in the top navigation and persists via cookie (`site_locale`)
 
@@ -119,7 +118,7 @@ Optional settings live in `src/config/site.ts` under `voiceIntro`.
 - `/experience` Career timeline + current role
 - `/education` Education
 - `/podcast` Podcast overview + episodes + shorts
-- `/podcast/[slug]` Episode details
+- `/projects` Projects + live Argo CD panel
 - `/contact` Contact links
 
 ## SEO
@@ -129,7 +128,7 @@ Implemented:
 - Metadata title template + description
 - OpenGraph defaults
 - `robots.ts`
-- `sitemap.ts` (includes podcast episode routes)
+- `sitemap.ts`
 
 ## Deployment
 
@@ -137,7 +136,7 @@ Implemented:
 
 1. Push repository to GitHub.
 2. Import project in Vercel.
-3. Set `PODCAST_RSS_URL` in project environment variables.
+3. Set `YOUTUBE_CHANNEL_ID`, `YOUTUBE_API_KEY`, `ARGOCD_URL` and `ARGOCD_TOKEN` in project environment variables.
 4. Deploy.
 
 ### Cloudflare Pages
@@ -146,9 +145,8 @@ Implemented:
 2. Build command: `pnpm build`
 3. Output directory: `.next`
 4. Use Cloudflare's Next.js support with adapter (OpenNext/official integration) depending on your Pages setup.
-5. Set `PODCAST_RSS_URL` in environment variables.
+5. Set the same environment variables as for Vercel.
 
 ## Notes
 
-- Podcast RSS fetch failures are handled gracefully on `/podcast` with fallback messaging.
-- Episode pages are statically generated from available RSS items.
+- YouTube fetch failures are handled gracefully on `/podcast` with fallback messaging.
