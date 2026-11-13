@@ -11,6 +11,9 @@ import { siteConfig } from '@/config/site';
 import { getJsonContent } from '@/lib/content';
 import { getDictionary } from '@/lib/i18n';
 import { getServerLocale } from '@/lib/i18n-server';
+import { seoMetadata } from '@/lib/seo';
+
+export const generateMetadata = seoMetadata('home');
 
 export default async function HomePage() {
   const locale = await getServerLocale();

@@ -8,10 +8,9 @@ import { siteConfig } from '@/config/site';
 import { getMdxContent, localizedMdxFile } from '@/lib/content';
 import { getDictionary } from '@/lib/i18n';
 import { getServerLocale } from '@/lib/i18n-server';
+import { seoMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Experience'
-};
+export const generateMetadata = seoMetadata('experience');
 
 type ExperienceFrontmatter = {
   timeline: TimelineItem[];

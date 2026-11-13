@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: 'My Personal Website',
-  title: 'Karol Kozłowski | DevOps Engineer',
+  name: 'Karol Kozłowski',
+  title: 'Karol Kozłowski | DevOps & Platform Engineer',
   description:
-    'Platform / DevOps Engineer portfolio covering CI/CD, DevSecOps, Kubernetes, Linux, automation, projects, career timeline, education, and podcast content.',
+    'DevOps and Platform Engineer in Warsaw: CI/CD, DevSecOps, Kubernetes and Linux. Experience at Visa and Samsung, a live GitOps homelab, and the Rozmowy z Kozłem podcast.',
   seoKeywords: [
     'Karol Kozłowski',
     'DevOps Engineer',

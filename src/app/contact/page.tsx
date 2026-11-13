@@ -10,11 +10,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
 import { getDictionary } from '@/lib/i18n';
 import { getServerLocale } from '@/lib/i18n-server';
+import { seoMetadata } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 
-export const metadata = {
-  title: 'Contact'
-};
+export const generateMetadata = seoMetadata('contact');
 
 type ContactLink = {
   label: string;

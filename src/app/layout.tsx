@@ -11,35 +11,25 @@ import { Navbar } from '@/components/layout/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { siteConfig } from '@/config/site';
 import { getServerLocale } from '@/lib/i18n-server';
+import { buildMetadata } from '@/lib/seo';
 
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 const sora = Sora({ subsets: ['latin'], variable: '--font-sora' });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: siteConfig.title,
-    template: `%s | ${siteConfig.author}`
-  },
-  description: siteConfig.description,
-  keywords: siteConfig.seoKeywords,
-  category: 'technology',
-  openGraph: {
-    title: siteConfig.title,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    type: 'website'
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.title,
-    description: siteConfig.description
-  },
-  alternates: {
-    canonical: siteConfig.url
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const defaults = buildMetadata('home', await getServerLocale());
+  return {
+    ...defaults,
+    metadataBase: new URL(siteConfig.url),
+    // Subpages set a short title; this appends the name.
+    title: { default: siteConfig.title, template: `%s | ${siteConfig.author}` },
+    applicationName: siteConfig.author,
+    authors: [{ name: siteConfig.author, url: siteConfig.url }],
+    creator: siteConfig.author,
+    keywords: siteConfig.seoKeywords,
+    category: 'technology'
+  };
+}
 
 export default async function RootLayout({
   children

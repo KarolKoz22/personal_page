@@ -4,10 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/config/site';
 import { getDictionary } from '@/lib/i18n';
 import { getServerLocale } from '@/lib/i18n-server';
+import { seoMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: 'About'
-};
+export const generateMetadata = seoMetadata('about');
 
 export default async function AboutPage() {
   const locale = await getServerLocale();

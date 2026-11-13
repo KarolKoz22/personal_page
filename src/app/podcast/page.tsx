@@ -10,12 +10,11 @@ import { siteConfig } from '@/config/site';
 import { getJsonContent, getMdxContent, localizedMdxFile } from '@/lib/content';
 import { getDictionary } from '@/lib/i18n';
 import { getServerLocale } from '@/lib/i18n-server';
+import { seoMetadata } from '@/lib/seo';
 import { getYouTubeUploadsSafe, type YouTubeVideo } from '@/lib/youtube';
 import { cn } from '@/lib/utils';
 
-export const metadata = {
-  title: 'Podcast'
-};
+export const generateMetadata = seoMetadata('podcast');
 
 type PodcastFrontmatter = {
   platforms?: { label: string; url: string }[];
