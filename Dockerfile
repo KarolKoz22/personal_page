@@ -8,8 +8,8 @@ RUN corepack enable
 
 FROM base AS deps
 WORKDIR /app
-COPY package.json ./
-RUN pnpm install --no-frozen-lockfile
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 FROM base AS builder
 WORKDIR /app
@@ -22,14 +22,16 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+RUN addgroup -S -g 1001 nodejs && adduser -S -u 1001 nextjs -G nodejs
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/content ./content
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-USER nextjs
+USER 1001:1001
 EXPOSE 3000
 CMD ["node", "server.js"]

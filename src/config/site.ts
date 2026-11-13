@@ -38,6 +38,12 @@ export const siteConfig = {
     tiktok: 'https://www.tiktok.com/@rozmowyzkozlem'
   },
   email: 'kozlowskikarol02@gmail.com',
+  homelab: {
+    repo: 'KarolKoz22/homelab-gitops',
+    branch: 'main',
+    repoUrl: 'https://github.com/KarolKoz22/homelab-gitops',
+    stack: ['Kubernetes', 'kubeadm', 'Argo CD', 'Helm', 'Kustomize', 'Sealed Secrets', 'Prometheus', 'Grafana', 'Loki', 'Alloy', 'Ansible', 'KVM']
+  },
   voiceIntro: {
     imageSrc: '/karol-photo.jpg',
     imageAlt: 'Karol portrait',

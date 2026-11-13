@@ -14,6 +14,7 @@ const dictionaries = {
       about: 'O mnie',
       experience: 'Doświadczenie',
       education: 'Edukacja',
+      projects: 'Projekty',
       podcast: 'Podcast',
       contact: 'Kontakt',
       openMenu: 'Otwórz menu'
@@ -43,6 +44,7 @@ const dictionaries = {
       highlights: {
         education: 'Zaplecze akademickie, projekty i praca inżynierska.',
         career: 'Aktualna pozycja oraz pozycje w przeszłości.',
+        projects: 'Homelab na Kubernetesie z GitOps i podglądem Argo CD na żywo.',
         podcast: 'Odcinki, wizja podcastu oraz shortsy.'
       }
     },
@@ -86,6 +88,37 @@ const dictionaries = {
       open: 'Otwórz',
       email: 'Email'
     },
+    projects: {
+      title: 'Projekty',
+      description: 'Rzeczy, które buduję po godzinach, żeby uczyć się w praktyce.',
+      source: 'Kod',
+      homelab: {
+        name: 'Homelab: Kubernetes + GitOps',
+        summary:
+          'Klaster kubeadm z 3 węzłów na maszynach KVM, w całości zarządzany przez Argo CD w modelu app-of-apps. Każda zmiana w klastrze to commit w repozytorium — monitoring (Prometheus, Grafana, Loki, Alloy) i sekrety (Sealed Secrets) też.',
+        points: [
+          '3 węzły kubeadm (v1.31), containerd, Flannel, provisioning przez Ansible',
+          'Argo CD zarządza samym sobą i wszystkimi komponentami z gita',
+          'Wszystkie zależności przypięte do wersji — klaster zmienia się tylko przez repozytorium',
+          'Metryki i logi: kube-prometheus-stack, Loki, Grafana Alloy'
+        ]
+      },
+      argo: {
+        title: 'Argo CD na żywo',
+        live: 'Na żywo',
+        snapshot: 'Z repozytorium',
+        snapshotNote: 'Klaster jest teraz offline — pokazuję aplikacje zadeklarowane w repozytorium GitOps.',
+        app: 'Aplikacja',
+        sync: 'Synchronizacja',
+        health: 'Stan',
+        source: 'Źródło',
+        updated: 'Odświeżono',
+        refresh: 'Odśwież',
+        commits: 'Ostatnie commity GitOps',
+        loading: 'Ładowanie…',
+        error: 'Nie udało się pobrać danych.'
+      }
+    },
     podcast: {
       title: 'Podcast',
       description: 'Dlaczego nagrywam, o czym mówię i gdzie możesz słuchać.',
@@ -121,6 +154,7 @@ const dictionaries = {
       about: 'About',
       experience: 'Experience',
       education: 'Education',
+      projects: 'Projects',
       podcast: 'Podcast',
       contact: 'Contact',
       openMenu: 'Open menu'
@@ -150,6 +184,7 @@ const dictionaries = {
       highlights: {
         education: 'Academic background, projects, and engineering thesis.',
         career: 'Current position and previous roles.',
+        projects: 'Kubernetes homelab run with GitOps, with a live Argo CD view.',
         podcast: 'Episodes, podcast vision, and shorts.'
       }
     },
@@ -192,6 +227,37 @@ const dictionaries = {
       getInTouch: 'Get in touch',
       open: 'Open',
       email: 'Email'
+    },
+    projects: {
+      title: 'Projects',
+      description: 'Things I build outside of work to learn by doing.',
+      source: 'Source',
+      homelab: {
+        name: 'Homelab: Kubernetes + GitOps',
+        summary:
+          'A 3-node kubeadm cluster on KVM VMs, managed entirely by Argo CD using the app-of-apps pattern. Every change to the cluster is a git commit, including monitoring (Prometheus, Grafana, Loki, Alloy) and secrets (Sealed Secrets).',
+        points: [
+          '3 kubeadm nodes (v1.31), containerd, Flannel, provisioned with Ansible',
+          'Argo CD manages itself and every component from git',
+          'Every dependency is version-pinned, so the cluster only changes through the repo',
+          'Metrics and logs: kube-prometheus-stack, Loki, Grafana Alloy'
+        ]
+      },
+      argo: {
+        title: 'Live Argo CD',
+        live: 'Live',
+        snapshot: 'From repo',
+        snapshotNote: 'The cluster is offline right now, so this shows the apps declared in the GitOps repo.',
+        app: 'Application',
+        sync: 'Sync',
+        health: 'Health',
+        source: 'Source',
+        updated: 'Updated',
+        refresh: 'Refresh',
+        commits: 'Latest GitOps commits',
+        loading: 'Loading…',
+        error: 'Could not load data.'
+      }
     },
     podcast: {
       title: 'Podcast',

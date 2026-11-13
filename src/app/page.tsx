@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import { ArrowUpRight, BriefcaseBusiness, GraduationCap, MicVocal } from 'lucide-react';
+import { ArrowUpRight, BriefcaseBusiness, FolderGit2, GraduationCap, MicVocal } from 'lucide-react';
 
-import { InteractiveProse } from '@/components/interactive-prose';
 import { MotionReveal } from '@/components/motion-reveal';
 import { VoiceIntro, TranscriptLine } from '@/components/home/voice-intro';
 import { PageContainer } from '@/components/layout/page-container';
@@ -35,6 +34,12 @@ export default async function HomePage() {
       description: dictionary.home.highlights.career
     },
     {
+      title: dictionary.nav.projects,
+      href: '/projects',
+      icon: FolderGit2,
+      description: dictionary.home.highlights.projects
+    },
+    {
       title: dictionary.nav.podcast,
       href: '/podcast',
       icon: MicVocal,
@@ -44,47 +49,34 @@ export default async function HomePage() {
 
   return (
     <PageContainer className="space-y-16">
-      <MotionReveal revealKey="home-hero-block">
-        <section className="space-y-6 sm:space-y-8">
-          <Badge variant="secondary" className="rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
-            {siteConfig.role}
-          </Badge>
-          <InteractiveProse
-            className="vision-prose font-display text-balance max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-6xl"
-            wordDelayMs={175}
-            sequenceKey="home-hero"
-            step={1}
+      <section className="space-y-6 sm:space-y-8">
+        <Badge variant="secondary" className="rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.18em]">
+          {siteConfig.role}
+        </Badge>
+        <div className="vision-prose font-display text-balance max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-6xl">
+          <h1>{dictionary.home.title}</h1>
+        </div>
+        <div className="vision-prose text-balance max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p>{dictionary.home.description}</p>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Button
+            asChild
+            className="w-full bg-gradient-to-r from-primary to-primary/85 shadow-[0_14px_24px_-18px_hsl(var(--primary)/0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:from-primary/95 hover:to-primary sm:w-auto"
           >
-            <h1>{dictionary.home.title}</h1>
-          </InteractiveProse>
-          <InteractiveProse
-            className="vision-prose text-balance max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
-            wordDelayMs={165}
-            sequenceKey="home-hero"
-            step={2}
-            hideUntilStart
+            <Link href="/experience">{dictionary.home.viewExperience}</Link>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="w-full border-border/75 bg-background/75 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:bg-accent/45 hover:shadow-[0_12px_24px_-18px_hsl(var(--primary)/0.75)] sm:w-auto"
           >
-            <p>{dictionary.home.description}</p>
-          </InteractiveProse>
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Button
-              asChild
-              className="w-full bg-gradient-to-r from-primary to-primary/85 shadow-[0_14px_24px_-18px_hsl(var(--primary)/0.9)] transition-all duration-200 hover:-translate-y-0.5 hover:from-primary/95 hover:to-primary sm:w-auto"
-            >
-              <Link href="/experience">{dictionary.home.viewExperience}</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="w-full border-border/75 bg-background/75 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:bg-accent/45 hover:shadow-[0_12px_24px_-18px_hsl(var(--primary)/0.75)] sm:w-auto"
-            >
-              <Link href="/contact">{dictionary.home.contact}</Link>
-            </Button>
-          </div>
-        </section>
-      </MotionReveal>
+            <Link href="/contact">{dictionary.home.contact}</Link>
+          </Button>
+        </div>
+      </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {highlights.map((item, index) => {
           const Icon = item.icon;
           return (

@@ -26,6 +26,7 @@ export function Navbar() {
     { href: '/', label: dictionary.nav.home },
     { href: '/experience', label: dictionary.nav.experience },
     { href: '/education', label: dictionary.nav.education },
+    { href: '/projects', label: dictionary.nav.projects },
     { href: '/podcast', label: dictionary.nav.podcast },
     { href: '/contact', label: dictionary.nav.contact }
   ];
