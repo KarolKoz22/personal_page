@@ -22,6 +22,8 @@ export type ArgoCommit = {
 
 export type ArgoStatus = {
   mode: 'live' | 'snapshot';
+  /** Why live mode failed (no secrets), to debug the tunnel from the outside. */
+  liveError?: string;
   fetchedAt: string;
   apps: ArgoApp[];
   commits: ArgoCommit[];
@@ -48,7 +50,7 @@ function getJson<T>(url: string, token: string, insecure: boolean): Promise<T> {
       res.on('data', (chunk: string) => (body += chunk));
       res.on('end', () => {
         if (!res.statusCode || res.statusCode >= 400) {
-          reject(new Error(`Argo CD responded ${res.statusCode}`));
+          reject(new Error(`Argo CD responded ${res.statusCode} from ${res.socket.remoteAddress ?? '?'} (server: ${res.headers.server ?? '?'})`));
           return;
         }
         try {
@@ -182,16 +184,20 @@ export async function getArgoStatus(): Promise<ArgoStatus> {
   const commitsPromise = getCommits();
   let mode: ArgoStatus['mode'] = 'live';
   let apps: ArgoApp[];
+  let liveError: string | undefined;
 
   try {
     apps = await getLiveApps();
-  } catch {
+  } catch (error) {
     mode = 'snapshot';
+    liveError = error instanceof Error ? error.message.slice(0, 160) : 'unknown error';
+    console.warn(`[argocd] live fetch failed: ${liveError}`);
     apps = await getSnapshotApps().catch(() => []);
   }
 
   const value: ArgoStatus = {
     mode,
+    liveError,
     fetchedAt: new Date().toISOString(),
     apps: apps.sort((a, b) => a.name.localeCompare(b.name)),
     commits: await commitsPromise
