@@ -15,9 +15,13 @@ type Params = {
   slug: string;
 };
 
+// Pre-build only the newest episodes; older ones render on first request
+// (dynamicParams defaults to true) instead of bloating every build.
+const PREBUILT_EPISODES = 50;
+
 export async function generateStaticParams() {
   const { episodes } = await getPodcastEpisodesSafe();
-  return episodes.map((episode) => ({ slug: episode.slug }));
+  return episodes.slice(0, PREBUILT_EPISODES).map((episode) => ({ slug: episode.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Params }) {
